@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Performance Summary Report</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif; background: #ffffff; color: #1a1a2e; font-size: 14px; line-height: 1.7; }
+.wrapper { max-width: 940px; margin: 0 auto; padding: 48px 40px 60px; }
+
+h1 { font-size: 28px; font-weight: 700; color: #1a1a2e; margin-bottom: 4px; }
+.subtitle { font-size: 14px; color: #555; margin-bottom: 32px; }
+
+h2 { font-size: 20px; font-weight: 700; color: #1a1a2e; margin: 36px 0 16px; }
+h3 { font-size: 16px; font-weight: 600; color: #1a1a2e; margin: 24px 0 12px; }
+
+p { margin-bottom: 14px; color: #333; font-size: 14px; line-height: 1.75; }
+ul { margin: 10px 0 18px 24px; }
+li { margin-bottom: 10px; color: #333; font-size: 14px; line-height: 1.7; }
+
+mark { background: #fff59d; padding: 1px 4px; border-radius: 2px; }
+
+.chart-container { border: 1px solid #e0e0e0; border-radius: 6px; padding: 20px; margin: 20px 0; background: #fff; box-sizing: border-box; width: 100%; }
+.chart-wrap { position: relative; height: 320px; width: 100%; box-sizing: border-box; }
+.chart-wrap canvas { max-width: 100% !important; height: 100% !important; }
+
+.summary-table { width: 100%; border-collapse: collapse; margin: 16px 0 24px; font-size: 13px; }
+.summary-table th { background: #f5f5f5; border: 1px solid #ddd; padding: 10px 14px; text-align: left; font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; }
+.summary-table td { border: 1px solid #ddd; padding: 9px 14px; }
+.summary-table tr:nth-child(even) td { background: #fafafa; }
+.summary-table .highlight td { font-weight: 700; background: #f0f0f0; }
+.td-right { text-align: right; }
+.up { color: #2d6a4f; font-weight: 600; }
+.down { color: #c1121f; font-weight: 600; }
+
+.port-color { color: #800020; font-weight: 600; }
+.city-color { color: #2563eb; font-weight: 600; }
+
+.confidential { font-size: 11px; color: #999; text-transform: uppercase; letter-spacing: 1.5px; margin-top: 40px; padding-top: 16px; border-top: 1px solid #eee; text-align: center; }
+
+.actions-list { counter-reset: action; list-style: none; margin-left: 0; padding-left: 0; }
+.actions-list li { counter-increment: action; margin-bottom: 14px; padding-left: 32px; position: relative; }
+.actions-list li::before { content: counter(action) "."; position: absolute; left: 0; font-weight: 700; color: #800020; font-size: 15px; }
+
+.alert-box { border-left: 4px solid #c1121f; background: #fef2f2; padding: 16px 20px; margin: 20px 0; border-radius: 0 6px 6px 0; }
+.alert-box strong { color: #c1121f; }
+
+@media print {
+  body { background: white; }
+  .wrapper { padding: 24px; max-width: 100%; }
+  .chart-container { page-break-inside: avoid; }
+  h2 { page-break-after: avoid; }
+}
+
+</style>
+</head>
+<body>
+<div class="wrapper">
+<h1>Performance Summary Report</h1>
+<div class="subtitle">Week Ending 17 May 2026  |  Reporting Period: 11 May - 17 May 2026  |  Week 8 of Reporting</div>
+
+
+<h2>Summary Metrics</h2>
+<table class="summary-table">
+<tr><th>Metric</th><th class="td-right">Value</th><th class="td-right">WoW Change</th></tr>
+<tr><td>Gross Gaming Revenue</td><td class="td-right"><strong>$11,848</strong></td><td class="td-right down">-86.3%</td></tr>
+<tr><td>Total Wagered</td><td class="td-right"><strong>$2.14M</strong></td><td class="td-right down">-5.5%</td></tr>
+<tr><td>GGR Margin</td><td class="td-right"><strong>0.55%</strong></td><td class="td-right down">-3.26pp</td></tr>
+<tr><td>Total Rounds Played</td><td class="td-right"><strong>31,793</strong></td><td class="td-right down">-9.5%</td></tr>
+<tr><td>Active Player-Hours</td><td class="td-right"><strong>541</strong></td><td class="td-right down">-18.4%</td></tr>
+<tr><td>Avg Session Length</td><td class="td-right"><strong>8.3 mins</strong></td><td class="td-right down">-0.8%</td></tr>
+</table>
+
+<div class="alert-box">
+<strong>BOARD ATTENTION REQUIRED:</strong> Week 8 GGR of $11,848 is the weakest weekly result in the eight-week reporting period, representing -86.3% WoW. Wagered volume held broadly stable (-5.5%) but margin collapsed to 0.55% (99.45% RTP) due to three concentrated overnight Port Roulette losses totalling -$68,264 GGR. Stake.us recorded a net loss of -$10,489 for the week. Detailed analysis in Sections 1 and 7.
+</div>
+
+<h2>1. Executive Commentary</h2>
+<p>
+Week 8 was the weakest week of the eight-week reporting period at <mark>$11,848 GGR</mark>, with portfolio
+margin collapsing to 0.55%. Wagered volume held broadly stable at $2.14M (-5.5% WoW), so the GGR decline
+was driven almost entirely by adverse player outcomes on three concentrated overnight Port Roulette
+sessions. The single largest loss occurred Wednesday 13 May 2am UTC: <mark>$151,913 wagered by 13 players,
+returned $187,056 in winnings, for net GGR of -$35,143</mark> - the largest single-hour negative outcome
+in the entire reporting period.
+</p>
+<p>
+Cumulative eight-week GGR now stands at <mark>$602,928</mark> on $17.5M wagered at 3.44% portfolio margin.
+Weekly average has compressed from $84,440 (after Week 7) to $75,366 - reflecting the magnitude of Week 8's
+underperformance. Week 8 contributed only 14% of an average week's GGR despite normal wagered volume.
+</p>
+<p>
+<strong>Wednesday 13 May was the worst day in the reporting period at -$30,937 GGR</strong>, driven by the
+single 2am Port Roulette event noted above plus a related 1am loss of -$3,434. <strong>Saturday 16 May was
+the strongest day at $13,185 GGR</strong>, providing a modest counter-balance but insufficient to offset
+midweek losses.
+</p>
+<p>
+<span class="port-color">Port Roulette</span> margin compressed to <mark>0.17%</mark> - the lowest in the
+reporting period - despite Port wagered volume of $1.91M (broadly in line with prior weeks). Port GGR of
+just $3,317 from $1.91M wagered is operationally significant: this is the first week where Port has
+essentially failed to generate margin. <span class="city-color">City Roulette</span> also weakened
+materially: GGR -$8,530 -64.3% WoW, margin 3.72% (-5.53pp WoW) - well below City's recent trend.
+</p>
+<p>
+<strong>Major commercial development:</strong> Stake.us recorded a <mark>net loss of -$10,489</mark> this
+week, contributing negatively to portfolio GGR for the first time in the reporting period. This contrasts
+sharply with Stake.us's average contribution of approximately $50K-$160K per week. The Stake.us loss
+absorbed effectively all of Week 8's positive contribution from other operators.
+</p>
+
+<h2>2. Alerts and Watch Items</h2>
+<ul>
+<li><strong>Three Port Roulette overnight loss events drove the week.</strong> Wednesday 13 May 2am (-$35,143), Monday 11 May 2am (-$25,225), and Friday 15 May 4am (-$7,896). Combined loss of $68,264 from three single-hour events. All three occurred between 2am-4am UTC on Port Roulette. Statistical clustering of this magnitude warrants technical RTP review - is this variance, or has Port game economics shifted?</li>
+<li><strong>Stake.us net-negative for the first time.</strong> -$10,489 net GGR contribution this week represents an unprecedented outcome. While monthly variance is expected at the operator level, the magnitude and direction of this swing warrants commercial team review. Stake.us wagered volume of $1.39M was actually elevated this week but outcomes ran heavily player-favourable.</li>
+<li><strong>Significant new operator activity continues.</strong> Twenty-six unique operator IDs appeared in Week 8 data (up from approximately 10 in Week 7). New operators include FOXYGOLD, COINCASINO, SPACEHILLS, TURBOWINS, INCOGNITOCASINO, HUB_SOCIAL, SHAKEBET, TGCASINO, BETINASIA, FASTSLOTS, KLIKKIKASINO, MEGADICE, SLOTTIMONSTERI, WOLFZ, WSMCASINO, and others. Aggregate contribution is modest but the trend is now a clear pattern requiring confirmation with operations and commercial teams.</li>
+<li><strong>Active player-hours declined for sixth consecutive week.</strong> 541 player-hours (-18.4% WoW). Cumulative trend: W3 1,091 to W4 1,090 to W5 931 to W6 789 to W7 663 to W8 541. The trajectory is now severe and demands immediate strategic intervention.</li>
+<li><strong>Port Roulette margin essentially zero this week.</strong> 0.17% margin (-2.94pp WoW). Fifth consecutive week of Port margin decline. Cumulative trend: W4 6.18% to W5 5.66% to W6 3.17% to W7 3.11% to W8 0.17%. This trajectory has now crossed below operational sustainability and requires technical review as a matter of priority.</li>
+</ul>
+
+<h2>3. Performance by Game</h2>
+<table class="summary-table">
+<tr><th>Metric</th><th class="td-right port-color">Port Roulette</th><th class="td-right">WoW</th><th class="td-right city-color">City Roulette</th><th class="td-right">WoW</th></tr>
+<tr><td>GGR</td><td class="td-right">$3,317</td><td class="td-right down">-94.7%</td><td class="td-right">$8,530</td><td class="td-right down">-64.3%</td></tr>
+<tr><td>GGR Share</td><td class="td-right">28.0%</td><td class="td-right">-</td><td class="td-right">72.0%</td><td class="td-right">-</td></tr>
+<tr><td>Total Wagered</td><td class="td-right">$1.91M</td><td class="td-right down">-4.7%</td><td class="td-right">$229K</td><td class="td-right down">-11.1%</td></tr>
+<tr><td>Margin</td><td class="td-right">0.17%</td><td class="td-right down">-2.94pp</td><td class="td-right">3.72%</td><td class="td-right down">-5.53pp</td></tr>
+<tr><td>RTP</td><td class="td-right">99.83%</td><td class="td-right">-</td><td class="td-right">96.28%</td><td class="td-right">-</td></tr>
+<tr><td>Rounds</td><td class="td-right">20,604</td><td class="td-right down">-0.5%</td><td class="td-right">11,189</td><td class="td-right down">-22.4%</td></tr>
+<tr><td>Player-Hours</td><td class="td-right">287</td><td class="td-right down">-2.3%</td><td class="td-right">254</td><td class="td-right down">-31.1%</td></tr>
+<tr><td>Avg Session</td><td class="td-right">8.1 mins</td><td class="td-right down">-1.2%</td><td class="td-right">8.6 mins</td><td class="td-right up">+1.2%</td></tr>
+<tr><td>Conversion</td><td class="td-right">72.4%</td><td class="td-right up">+1.1pp</td><td class="td-right">59.4%</td><td class="td-right up">+2.2pp</td></tr>
+</table>
+
+<p>
+For the first time in the reporting period, City Roulette contributed a larger share of GGR (72.0%) than
+Port Roulette (28.0%), driven entirely by Port's near-zero margin rather than any City strength. Both
+games saw material engagement metrics deterioration, with City Roulette player-hours falling -31.1% WoW.
+</p>
+
+<h2>4. Day-of-Week GGR Performance</h2>
+<div class="chart-container">
+<div class="chart-wrap"><canvas id="dowChart"></canvas></div>
+</div>
+
+<table class="summary-table">
+<tr><th>Day</th><th class="td-right">GGR</th><th class="td-right">Rounds</th><th class="td-right">Wagered</th></tr>
+<tr><td>Mon 11 May</td><td class="td-right">$7,018</td><td class="td-right">4,212</td><td class="td-right">$476,045</td></tr>
+<tr><td>Tue 12 May</td><td class="td-right">$6,576</td><td class="td-right">4,275</td><td class="td-right">$242,626</td></tr>
+<tr><td>Wed 13 May</td><td class="td-right down">-$30,937</td><td class="td-right">5,120</td><td class="td-right">$334,869</td></tr>
+<tr><td>Thu 14 May</td><td class="td-right">$11,303</td><td class="td-right">5,170</td><td class="td-right">$215,810</td></tr>
+<tr><td>Fri 15 May</td><td class="td-right">$1,391</td><td class="td-right">4,960</td><td class="td-right">$624,924</td></tr>
+<tr><td>Sat 16 May</td><td class="td-right up">$13,185</td><td class="td-right">4,943</td><td class="td-right">$158,011</td></tr>
+<tr><td>Sun 17 May</td><td class="td-right">$3,312</td><td class="td-right">3,113</td><td class="td-right">$86,762</td></tr>
+</table>
+
+<p>
+Wednesday 13 May's -$30,937 result is the largest single-day loss in the reporting period, exceeding the
+prior worst (Saturday 2 May at -$10,251) by 202%. Friday's $1,391 result on $625K wagered (the highest
+Friday wagered volume on record) represents another near-zero margin day driven by the 4am Port event.
+</p>
+
+<h2>5. Hourly Activity Pattern</h2>
+<div class="chart-container">
+<div class="chart-wrap"><canvas id="hourlyChart"></canvas></div>
+</div>
+
+<p>
+Port Roulette wagering this week shows the same overnight concentration pattern observed in Weeks 6 and 7,
+with peaks at 2am-4am UTC. Average Port hourly wagering at 2am reached $68K/day across the week, driven
+by the multiple concentrated events. The Port wagering volume at 2am-4am UTC averaged $148K combined per
+day - meaningful exposure for the four-hour overnight window. City Roulette wagering pattern remained
+broadly flat across the day with mild peaks at 2am and 7pm.
+</p>
+
+<h2>6. GGR by Game by Day</h2>
+<table class="summary-table">
+<tr><th>Date</th><th class="td-right city-color">City Roulette</th><th class="td-right port-color">Port Roulette</th><th class="td-right">Daily Total</th></tr>
+<tr><td>Mon 11 May</td><td class="td-right">$946</td><td class="td-right">$6,072</td><td class="td-right"><strong>$7,018</strong></td></tr>
+<tr><td>Tue 12 May</td><td class="td-right down">-$4,378</td><td class="td-right">$10,953</td><td class="td-right"><strong>$6,576</strong></td></tr>
+<tr><td>Wed 13 May</td><td class="td-right">$4,318</td><td class="td-right down">-$35,255</td><td class="td-right down"><strong>-$30,937</strong></td></tr>
+<tr><td>Thu 14 May</td><td class="td-right">-$266</td><td class="td-right">$11,569</td><td class="td-right"><strong>$11,303</strong></td></tr>
+<tr><td>Fri 15 May</td><td class="td-right">$3,001</td><td class="td-right">-$1,610</td><td class="td-right"><strong>$1,391</strong></td></tr>
+<tr><td>Sat 16 May</td><td class="td-right">$2,236</td><td class="td-right">$10,949</td><td class="td-right"><strong>$13,185</strong></td></tr>
+<tr><td>Sun 17 May</td><td class="td-right">$2,673</td><td class="td-right">$639</td><td class="td-right"><strong>$3,312</strong></td></tr>
+<tr class="highlight"><td>Week Total</td><td class="td-right">$8,530</td><td class="td-right">$3,317</td><td class="td-right"><strong>$11,848</strong></td></tr>
+</table>
+
+<div class="chart-container">
+<div class="chart-wrap"><canvas id="gameByDayChart"></canvas></div>
+</div>
+
+<p>
+Port Roulette finished the week with only $3,317 GGR across 7 days despite generating $1.91M in wagered
+volume. Excluding Wednesday's -$35,255 outcome, Port would have delivered $38,572 GGR for the week
+(2.06% margin) - in line with recent trends. The single Wednesday event is responsible for essentially
+all of Port's underperformance this week.
+</p>
+
+<h2>7. Notable High-Value Events</h2>
+<p>
+Three concentrated overnight Port Roulette events drove Week 8's outcome and warrant detailed Board review.
+The pattern of midweek and weekend overnight (2am-4am UTC) high-stake activity is now a sustained operational
+feature requiring strategic response.
+</p>
+
+<h3>Wednesday 13 May 2am UTC - Port Roulette $35K Single-Hour Loss</h3>
+<div class="alert-box">
+<strong>This is the largest single-hour negative outcome in the eight-week reporting period.</strong>
+$151,913 wagered by 13 players in 60 minutes. Returned $187,056 in winnings for net GGR of -$35,143
+(player-favourable variance of approximately 23% to house).
+</div>
+
+<table class="summary-table">
+<tr><th>Hour (UTC)</th><th>Game</th><th class="td-right">Wagered</th><th class="td-right">Won by Players</th><th class="td-right">GGR</th><th class="td-right">Players</th></tr>
+<tr><td>Wed 1am</td><td class="port-color">Port Roulette</td><td class="td-right">$13,081</td><td class="td-right">$16,515</td><td class="td-right down">-$3,434</td><td class="td-right">7</td></tr>
+<tr><td>Wed 2am</td><td class="port-color">Port Roulette</td><td class="td-right">$151,913</td><td class="td-right">$187,056</td><td class="td-right down"><strong>-$35,143</strong></td><td class="td-right">13</td></tr>
+<tr class="highlight"><td colspan="2">Wed 1-3am combined</td><td class="td-right">$164,995</td><td class="td-right">$203,571</td><td class="td-right down">-$38,577</td><td class="td-right">-</td></tr>
+</table>
+<p>
+The 13-player cohort in the 2am hour represents a tightly grouped high-stake session. Average implied
+per-player exposure of approximately $11,700. Outcome significantly player-favourable - statistically
+within the variance distribution for Port Roulette but at the unfavourable tail.
+</p>
+
+<h3>Monday 11 May 2am UTC - Port Roulette $25K Single-Hour Loss</h3>
+<table class="summary-table">
+<tr><th>Hour (UTC)</th><th>Game</th><th class="td-right">Wagered</th><th class="td-right">Won by Players</th><th class="td-right">GGR</th><th class="td-right">Players</th></tr>
+<tr><td>Mon 1am</td><td class="port-color">Port Roulette</td><td class="td-right">$144,076</td><td class="td-right">$119,402</td><td class="td-right up"><strong>$24,673</strong></td><td class="td-right">10</td></tr>
+<tr><td>Mon 2am</td><td class="port-color">Port Roulette</td><td class="td-right">$190,893</td><td class="td-right">$216,118</td><td class="td-right down"><strong>-$25,225</strong></td><td class="td-right">15</td></tr>
+<tr class="highlight"><td colspan="2">Mon 1-3am combined</td><td class="td-right">$334,969</td><td class="td-right">$335,520</td><td class="td-right">-$552</td><td class="td-right">-</td></tr>
+</table>
+<p>
+The Monday overnight window saw 25 distinct players across two hours wagering $335K combined. Net outcome
+across the two hours was essentially break-even, but the swing within the window (positive $24,673 followed
+by negative $25,225) indicates substantial intra-hour volatility for individual player accounts.
+</p>
+
+<h3>Friday 15 May 4am UTC - Port Roulette $300K Wagered</h3>
+<table class="summary-table">
+<tr><th>Hour (UTC)</th><th>Game</th><th class="td-right">Wagered</th><th class="td-right">Won by Players</th><th class="td-right">GGR</th><th class="td-right">Players</th></tr>
+<tr><td>Fri 3am</td><td class="port-color">Port Roulette</td><td class="td-right">$167,656</td><td class="td-right">$163,664</td><td class="td-right up">$3,993</td><td class="td-right">8</td></tr>
+<tr><td>Fri 4am</td><td class="port-color">Port Roulette</td><td class="td-right">$300,514</td><td class="td-right">$308,410</td><td class="td-right down">-$7,896</td><td class="td-right">10</td></tr>
+<tr class="highlight"><td colspan="2">Fri 3-5am combined</td><td class="td-right">$468,170</td><td class="td-right">$472,074</td><td class="td-right">-$3,904</td><td class="td-right">-</td></tr>
+</table>
+<p>
+Friday's overnight Port window represents continued concentration of high-stake activity in the 2am-5am
+UTC range. While the loss outcome was modest at -$7,896, the wagered volume of $468K across the three-hour
+window remains operationally material.
+</p>
+
+<h3>Pattern across high-roller events (cumulative across reporting period)</h3>
+<ul>
+<li>Single-hour wagering events exceeding $100K have occurred in every week of the reporting period</li>
+<li>Approximately 90% of these events occur on Stake.us / Port Roulette</li>
+<li>Approximately 85% occur between 1am-5am UTC</li>
+<li>Player cohorts in these events typically range from 1-15 players per session</li>
+<li>Net cumulative GGR across the largest 20 events is broadly neutral (slightly negative) - confirming that game economics behave as expected over large samples, but individual events drive significant weekly volatility</li>
+<li>The pattern is now consistent enough to be considered structural rather than incidental</li>
+</ul>
+
+<h2>8. Player Engagement Metrics</h2>
+<table class="summary-table">
+<tr><th>Game</th><th class="td-right">Conversion Rate</th><th class="td-right">Bounce Rate</th><th class="td-right">Avg Session</th><th class="td-right">Player-Hours</th><th class="td-right">WoW</th></tr>
+<tr><td class="port-color">Port Roulette</td><td class="td-right">72.4%</td><td class="td-right">27.6%</td><td class="td-right">8.1 mins</td><td class="td-right">287</td><td class="td-right down">-2.3%</td></tr>
+<tr><td class="city-color">City Roulette</td><td class="td-right">59.4%</td><td class="td-right">40.6%</td><td class="td-right">8.6 mins</td><td class="td-right">254</td><td class="td-right down">-31.1%</td></tr>
+<tr class="highlight"><td>Portfolio Average</td><td class="td-right">66.5%</td><td class="td-right">33.5%</td><td class="td-right">8.3 mins</td><td class="td-right">541</td><td class="td-right down">-18.4%</td></tr>
+</table>
+<p>
+Conversion rate improved to 66.5% (+2.9pp WoW), continuing the positive engagement quality trend even
+as gross player-hours declined sharply. The gap between engagement quality (improving) and engagement
+volume (declining) continues to widen - the player base is becoming smaller but more committed. City
+Roulette player-hours decline of -31.1% is the most severe single-week drop for City in the reporting
+period.
+</p>
+
+<h3>Top Operators</h3>
+<p>
+Operator-level analysis this week is materially affected by Stake.us's net-negative outcome and the
+appearance of multiple new operators. Reporting shown below excludes operators with absolute GGR under $50.
+</p>
+
+<table class="summary-table">
+<tr><th>#</th><th>Operator</th><th class="td-right">GGR</th><th class="td-right">Wagered</th><th class="td-right">Margin</th><th class="td-right">Rounds</th></tr>
+<tr><td>1</td><td><strong>HUB B2B (EU)</strong></td><td class="td-right up">$9,793</td><td class="td-right">$226K</td><td class="td-right">4.34%</td><td class="td-right">4,208</td></tr>
+<tr><td>2</td><td><strong>SKYHILLS</strong> (new in W7)</td><td class="td-right up">$7,461</td><td class="td-right">$52K</td><td class="td-right">14.30%</td><td class="td-right">781</td></tr>
+<tr><td>3</td><td><strong>Stake.com</strong></td><td class="td-right">$3,917</td><td class="td-right">$212K</td><td class="td-right">1.84%</td><td class="td-right">10,221</td></tr>
+<tr><td>4</td><td><strong>INSTANTCASINO</strong> (new in W7)</td><td class="td-right">$684</td><td class="td-right">$2.6K</td><td class="td-right">26.62%</td><td class="td-right">292</td></tr>
+<tr><td>5</td><td><strong>COINCASINO</strong> (new)</td><td class="td-right">$588</td><td class="td-right">$4.1K</td><td class="td-right">14.45%</td><td class="td-right">348</td></tr>
+<tr><td>6</td><td><strong>SPACEHILLS</strong> (new)</td><td class="td-right">$564</td><td class="td-right">$6.1K</td><td class="td-right">9.31%</td><td class="td-right">336</td></tr>
+<tr><td>7</td><td><strong>HUB B2B (Asia)</strong></td><td class="td-right">$270</td><td class="td-right">$3K</td><td class="td-right">8.84%</td><td class="td-right">1,077</td></tr>
+<tr><td>8</td><td><strong>Stake.us</strong></td><td class="td-right down">-$10,489</td><td class="td-right">$1.39M</td><td class="td-right">-0.75%</td><td class="td-right">2,581</td></tr>
+<tr><td>9</td><td><strong>FOXYGOLD</strong> (new)</td><td class="td-right down">-$1,312</td><td class="td-right">~$0</td><td class="td-right">-</td><td class="td-right">8</td></tr>
+</table>
+
+<p>
+Three commercial observations from Week 8:
+</p>
+<ul>
+<li><strong>Stake.us at -$10,489 GGR</strong> is the most material commercial development. While Stake.us wagered $1.39M (broadly in line with prior weeks), outcomes ran heavily player-favourable. Combined with HUB B2B EU's positive contribution and SKYHILLS' strong showing, the operator mix this week is uncharacteristic.</li>
+<li><strong>SKYHILLS continues to grow</strong> from $3,925 GGR in Week 7 to $7,461 in Week 8 (+90% WoW). SKYHILLS is operating at a notably high 14.30% margin - worth understanding the player profile and confirming sustainability.</li>
+<li><strong>Multiple new operator IDs</strong> appeared this week beyond Week 7's set. Confirmation with operations team on intentionality is urgent given the volume of new commercial relationships.</li>
+</ul>
+
+<h3>Top Sub-Partners</h3>
+<table class="summary-table">
+<tr><th>#</th><th>Sub-Partner</th><th>Operator Hub</th><th class="td-right">GGR</th><th class="td-right">Wagered</th></tr>
+<tr><td>1</td><td><strong>Betninja</strong></td><td>HUB B2B (EU)</td><td class="td-right up">$12,099</td><td class="td-right">$131K</td></tr>
+<tr><td>2</td><td><strong>(direct)</strong></td><td>SKYHILLS</td><td class="td-right up">$8,334</td><td class="td-right">$76K</td></tr>
+<tr><td>3</td><td><strong>Stake.com</strong></td><td>Stake.com</td><td class="td-right">$3,917</td><td class="td-right">$212K</td></tr>
+<tr><td>4</td><td><strong>Cryptorino</strong></td><td>HUB B2B (EU)</td><td class="td-right">$2,042</td><td class="td-right">$25K</td></tr>
+<tr><td>5</td><td><strong>Soft2Bet</strong></td><td>HUB B2B (EU)</td><td class="td-right">$782</td><td class="td-right">$2K</td></tr>
+<tr><td>6</td><td><strong>Gamdom</strong></td><td>HUB B2B (EU)</td><td class="td-right">$471</td><td class="td-right">$483</td></tr>
+<tr><td>7</td><td><strong>Neon_8</strong></td><td>HUB B2B (Asia)</td><td class="td-right">$302</td><td class="td-right">$3K</td></tr>
+<tr><td>8</td><td><strong>Stake.us</strong></td><td>Stake.us</td><td class="td-right down">-$10,489</td><td class="td-right">$1.39M</td></tr>
+</table>
+<p>
+Betninja contribution rose to $12,099 (a record weekly contribution from this sub-partner), reinforcing
+its position as the most material non-Stake commercial relationship. The aggregate HUB B2B (EU) sub-partner
+contribution of approximately $15,727 provided the only meaningful positive driver this week.
+</p>
+
+<h2>9. 8-Week Rolling Summary</h2>
+<div class="chart-container">
+<div class="chart-wrap"><canvas id="rollingChart"></canvas></div>
+</div>
+
+<table class="summary-table">
+<tr><th>Metric</th><th class="td-right">W1</th><th class="td-right">W2</th><th class="td-right">W3</th><th class="td-right">W4</th><th class="td-right">W5</th><th class="td-right">W6</th><th class="td-right">W7</th><th class="td-right">W8</th><th class="td-right">Cum.</th></tr>
+<tr><td>GGR</td><td class="td-right">$84.8K</td><td class="td-right">$73.5K</td><td class="td-right">$79.2K</td><td class="td-right">$109.4K</td><td class="td-right">$84.7K</td><td class="td-right">$73.4K</td><td class="td-right">$86.2K</td><td class="td-right down">$11.8K</td><td class="td-right"><strong>$602,928</strong></td></tr>
+<tr><td>Wagered</td><td class="td-right">$3.69M</td><td class="td-right">$1.83M</td><td class="td-right">$2.76M</td><td class="td-right">$1.74M</td><td class="td-right">$1.55M</td><td class="td-right">$1.57M</td><td class="td-right">$2.26M</td><td class="td-right">$2.14M</td><td class="td-right"><strong>$17.5M</strong></td></tr>
+<tr><td>Margin</td><td class="td-right">2.30%</td><td class="td-right">4.01%</td><td class="td-right">2.87%</td><td class="td-right">6.29%</td><td class="td-right">5.46%</td><td class="td-right">4.67%</td><td class="td-right">3.81%</td><td class="td-right down">0.55%</td><td class="td-right"><strong>3.44%</strong></td></tr>
+<tr><td>Rounds</td><td class="td-right">21.3K</td><td class="td-right">25.7K</td><td class="td-right">24.5K</td><td class="td-right">43.9K</td><td class="td-right">41.8K</td><td class="td-right">38.4K</td><td class="td-right">35.1K</td><td class="td-right">31.8K</td><td class="td-right"><strong>262,431</strong></td></tr>
+<tr><td>Conv Rate</td><td class="td-right">51.8%</td><td class="td-right">53.1%</td><td class="td-right">55.3%</td><td class="td-right">59.9%</td><td class="td-right">57.1%</td><td class="td-right">61.1%</td><td class="td-right">63.6%</td><td class="td-right">66.5%</td><td class="td-right"><strong>58.6%</strong></td></tr>
+</table>
+<p>
+Across eight weeks, GGR has averaged $75,366/week with cumulative portfolio margin of 3.44%. Week 8 was
+an outlier on the downside, with margin compression of approximately 3pp below average. Conversion rate
+continues its monotonic improvement trajectory (51.8% to 66.5%) - this is the sole consistent positive
+trend in the reporting period and now represents an 8-week trend that warrants celebration.
+</p>
+
+<h2>10. Recommended Actions</h2>
+<ol class="actions-list">
+<li><strong>Technical RTP review of Port Roulette - urgent.</strong> Five consecutive weeks of margin decline (W4 6.18% to W8 0.17%) is now too consistent to attribute to variance. Engage game technical team to verify: (a) Port Roulette RTP configuration is functioning as designed, (b) no recent changes have altered game economics, (c) statistical distribution of outcomes is within expected bounds. Output should be available before next Board cycle.</li>
+<li><strong>Risk and Compliance review of Wednesday 13 May -$35K event.</strong> Largest single-hour loss of the reporting period. Pull session-level RGS detail. Confirm: stake limits, responsible gambling protocols, player identity verification, and whether the 13-player cohort represents existing VIPs or new high-stake registrations.</li>
+<li><strong>Commercial deep-dive on Stake.us net loss.</strong> -$10,489 net contribution from Stake.us this week is a significant departure from established norms. Operations, commercial, and risk teams should jointly review: (a) whether outcome represents normal variance, (b) any change in Stake.us player mix or volume patterns, (c) implications for the Stake.us relationship and forward expectations.</li>
+<li><strong>Player-hours decline - strategic intervention required.</strong> Sixth consecutive week of player-hours decline, with cumulative reduction now approximately -95% versus Week 1 baseline. The trajectory is no longer recoverable through incremental improvements. Strategic discussion at Board level recommended on: (a) acquisition spend allocation, (b) retention programmes, (c) whether the high-roller concentration is causing collateral disengagement of broader player base.</li>
+<li><strong>City Roulette engagement decline review.</strong> City Roulette player-hours fell -31.1% WoW (the most severe single-week drop for City in the reporting period). Combined with margin compression to 3.72%, City requires attention beyond the Port-specific issues flagged above. Worth a brief operational review to identify any City-specific drivers.</li>
+<li><strong>Weekend pattern observation continues.</strong> Saturday 16 May was the strongest day at $13,185 GGR, partially offsetting Wednesday's loss. Saturday strength continues from the Week 7 trend (excluding the Week 6-7 high-roller event days). Weekend operational coverage protocols should be maintained.</li>
+</ol>
+
+
+<div class="confidential">Confidential - Board and SLT Distribution Only  |  Generated 20 May 2026</div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+
+var dowData = [7018, 6576, -30937, 11303, 1391, 13185, 3312];
+new Chart(document.getElementById('dowChart').getContext('2d'), {
+  type: 'bar',
+  data: {
+    labels: ['Mon 11','Tue 12','Wed 13','Thu 14','Fri 15','Sat 16','Sun 17'],
+    datasets: [{
+      label: 'Daily GGR ($)',
+      data: dowData,
+      backgroundColor: dowData.map(function(v) { return v >= 0 ? '#2d6a4f' : '#c1121f'; }),
+      borderRadius: 3, barPercentage: 0.7
+    }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    layout: { padding: { left: 5, right: 5, top: 5, bottom: 5 } },
+    plugins: { legend: { display: false }, title: { display: true, text: 'Daily GGR - Week 8 (11-17 May 2026)', font: { size: 14, weight: '600' } } },
+    scales: { y: { grid: { color: '#f0f0f0' }, ticks: { callback: function(v) { return '$' + v.toLocaleString(); } } }, x: { grid: { display: false }, ticks: { autoSkip: false, maxRotation: 0, minRotation: 0, font: { size: 11 } } } }
+  }
+});
+
+new Chart(document.getElementById('hourlyChart').getContext('2d'), {
+  type: 'line',
+  data: {
+    labels: Array.from({length: 24}, function(_, i) { return i + ':00'; }),
+    datasets: [
+      { label: 'Port Roulette', data: [5576,25896,68256,35701,44642,1275,1968,1284,4323,1975,2983,2232,1469,5160,4345,13914,4739,2000,2256,10557,5809,8007,10107,8334], borderColor: '#800020', backgroundColor: 'rgba(128,0,32,0.05)', tension: 0.3, pointRadius: 2, borderWidth: 2, fill: false },
+      { label: 'City Roulette', data: [872,2773,5543,1716,2331,1543,885,537,651,621,297,385,323,589,512,531,584,806,369,2882,2974,2763,800,1485], borderColor: '#2563eb', backgroundColor: 'rgba(37,99,235,0.05)', tension: 0.3, pointRadius: 2, borderWidth: 2, fill: false }
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    layout: { padding: { left: 5, right: 5, top: 5, bottom: 5 } },
+    plugins: { title: { display: true, text: 'Hourly Wagering Pattern - Avg per Day ($)', font: { size: 14, weight: '600' } } },
+    scales: { y: { grid: { color: '#f0f0f0' }, ticks: { callback: function(v) { return '$' + v.toLocaleString(); } } }, x: { grid: { display: false }, ticks: { autoSkip: false, maxRotation: 0, minRotation: 0, font: { size: 9 } } } }
+  }
+});
+
+new Chart(document.getElementById('gameByDayChart').getContext('2d'), {
+  type: 'bar',
+  data: {
+    labels: ['Mon 11','Tue 12','Wed 13','Thu 14','Fri 15','Sat 16','Sun 17'],
+    datasets: [
+      { label: 'City Roulette', data: [946,-4378,4318,-266,3001,2236,2673], backgroundColor: '#2563eb', borderRadius: 2 },
+      { label: 'Port Roulette', data: [6072,10953,-35255,11569,-1610,10949,639], backgroundColor: '#800020', borderRadius: 2 }
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    layout: { padding: { left: 5, right: 5, top: 5, bottom: 5 } },
+    plugins: { legend: { position: 'top', labels: { usePointStyle: true, pointStyle: 'rect', padding: 16 } }, title: { display: true, text: 'GGR by Game by Day ($)', font: { size: 14, weight: '600' } } },
+    scales: { x: { stacked: true, grid: { display: false }, ticks: { autoSkip: false, maxRotation: 0, minRotation: 0, font: { size: 11 } } }, y: { stacked: true, grid: { color: '#f0f0f0' }, ticks: { callback: function(v) { return '$' + (v/1000).toFixed(0) + 'K'; } } } }
+  }
+});
+
+new Chart(document.getElementById('rollingChart').getContext('2d'), {
+  type: 'bar',
+  data: {
+    labels: ['W1', 'W2', 'W3', 'W4', 'W5', 'W6', 'W7', 'W8'],
+    datasets: [
+      { label: 'Port Roulette', data: [45742, 48941, 46255, 73000, 63696, 41247, 62287, 3317], backgroundColor: '#800020', borderRadius: 3 },
+      { label: 'City Roulette', data: [39035, 24539, 32941, 36365, 20980, 32168, 23885, 8530], backgroundColor: '#2563eb', borderRadius: 3 }
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    layout: { padding: { left: 5, right: 5, top: 5, bottom: 5 } },
+    plugins: { legend: { position: 'top', labels: { usePointStyle: true, pointStyle: 'rect', padding: 16 } }, title: { display: true, text: 'Weekly GGR by Game ($)', font: { size: 14, weight: '600' } } },
+    scales: { y: { grid: { color: '#f0f0f0' }, ticks: { callback: function(v) { return '$' + v.toLocaleString(); } } }, x: { grid: { display: false }, ticks: { autoSkip: false, maxRotation: 0, minRotation: 0, font: { size: 11 } } } }
+  }
+});
+
+});
+</script>
+</body>
+</html>
